@@ -1,7 +1,7 @@
 Package: com.neinzedd9.percentagecirclex
 Name: PercentageCircleX
 Depends: mobilesubstrate
-Version: 1.0.0
+Version: 1.0.1
 Architecture: iphoneos-arm
 Description: Adds the percentage inside of a circle on iPhone X.
 Maintainer: NeinZedd9
