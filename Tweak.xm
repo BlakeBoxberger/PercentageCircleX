@@ -1,10 +1,7 @@
-@interface _UIStatusBar : UIView
-@property (nonatomic, assign, readwrite) NSInteger style;
-@end
-
 @interface _UIBatteryView : UIView
 @property NSInteger chargingState;
 @property CGFloat chargePercent;
+@property (nonatomic, copy, readwrite) UIColor *fillColor;
 @property (nonatomic, retain) UILabel *nz9_percentLabel;
 @property (nonatomic, retain) UIView *nz9_circleView;
 - (void)nz9_initPercentLabel;
@@ -12,16 +9,6 @@
 - (UIColor *)nz9_colorFormula;
 @end
 
-NSInteger currentStyle = 0; // Color style of status bar
-
-%hook _UIStatusBar
-
-- (void)setStyle:(NSInteger)arg1 {
-	%orig;
-	currentStyle = arg1;
-}
-
-%end
 
 %hook _UIBatteryView
 %property (nonatomic, retain) UILabel *nz9_percentLabel;
@@ -65,16 +52,9 @@ NSInteger currentStyle = 0; // Color style of status bar
 
 %new
 - (UIColor *)nz9_colorFormula {
-	if(currentStyle == UIBarStyleBlack) {
-		self.nz9_percentLabel.textColor = UIColor.whiteColor;
-		self.nz9_circleView.layer.borderColor = [UIColor.whiteColor CGColor];
-		return UIColor.clearColor;
-	}
-	else {
-		self.nz9_percentLabel.textColor = UIColor.blackColor;
-		self.nz9_circleView.layer.borderColor = [UIColor.blackColor CGColor];
-		return UIColor.clearColor;
-	}
+	self.nz9_percentLabel.textColor = self.fillColor;
+	self.nz9_circleView.layer.borderColor = [self.fillColor CGColor];
+	return UIColor.clearColor;
 }
 
 - (UIColor *)_batteryColor {
